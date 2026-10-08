@@ -47,19 +47,20 @@
 const panels=[...document.querySelectorAll('.start-panel')];
 const state={time:null,moods:[],walk:null,budget:null};
 const placeDB={
-  0:{name:"문래예술촌",type:"walk",moods:["walk","discover","art"],walk:1,budget:0,duration:30,cost:0,score:10,season:["autumn"],roles:["walk","discover"],xy:[48,48],fit:["coffee","eat","beer"]},
-  1:{name:"소문난식당",type:"eat",moods:["eat","discover"],walk:1,budget:1,duration:55,cost:10000,score:9,season:[],roles:["lunch","eat"],xy:[38,62],fit:["walk","discover"]},
-  2:{name:"영일분식",type:"eat",moods:["eat","discover"],walk:1,budget:1,duration:45,cost:7000,score:8,season:[],roles:["lunch","eat"],xy:[39,64],fit:["walk","discover"]},
-  3:{name:"철산장",type:"eat",moods:["eat","discover"],walk:2,budget:2,duration:75,cost:25000,score:9,season:["autumn"],roles:["dinner","eat"],xy:[62,57],fit:["walk","beer"]},
-  4:{name:"러스트 베이커리",type:"coffee",moods:["coffee","discover","art"],walk:1,budget:1,duration:45,cost:9000,score:9,season:["autumn"],roles:["coffee","rest"],xy:[58,43],fit:["walk","discover","autumn"]},
-  5:{name:"문래방구",type:"coffee",moods:["coffee","discover"],walk:1,budget:1,duration:40,cost:7000,score:8,season:[],roles:["coffee","rest"],xy:[67,34],fit:["walk","discover"]},
-  6:{name:"문래근린공원",type:"walk",moods:["walk","rest"],walk:2,budget:0,duration:30,cost:0,score:7,season:["autumn"],roles:["rest","walk"],xy:[42,45],fit:["eat","coffee","walk"]},
-  7:{name:"문래동 꽃밭정원",type:"walk",moods:["walk","discover","art"],walk:2,budget:0,duration:35,cost:0,score:9,season:["autumn"],roles:["autumn","walk"],xy:[34,39],fit:["walk","discover","coffee"]},
-  8:{name:"은진포차",type:"night",moods:["eat","beer","discover"],walk:2,budget:2,duration:75,cost:30000,score:9,season:["autumn"],roles:["dinner","night","seasonal"],xy:[27,55],fit:["walk","beer"]},
-  9:{name:"올드문래",type:"night",moods:["beer","discover"],walk:1,budget:2,duration:80,cost:22000,score:9,season:["autumn"],roles:["night","beer"],xy:[53,69],fit:["walk","dinner"]},
-  10:{name:"월화갈비",type:"eat",moods:["eat","beer"],walk:2,budget:3,duration:80,cost:35000,score:9,season:["autumn"],roles:["dinner","eat"],xy:[57,61],fit:["walk","beer","night"]},
-  11:{name:"죽변항",type:"night",moods:["eat","beer","discover"],walk:3,budget:3,duration:90,cost:40000,score:8,season:["autumn"],roles:["dinner","night","seasonal"],xy:[82,78],fit:["walk","beer","night"]}
+  0:{name:"문래예술촌",type:"walk",moods:["walk","discover","art"],walk:1,budget:0,duration:30,cost:0,score:10,season:["autumn"],roles:["walk","discover"],fit:["coffee","eat","beer"],coord:[37.5149,126.8939],coordStatus:"approx"},
+  1:{name:"소문난식당",type:"eat",moods:["eat","discover"],walk:1,budget:1,duration:55,cost:10000,score:9,season:[],roles:["lunch","eat"],fit:["walk","discover"],coord:[37.51625,126.8897],coordStatus:"approx"},
+  2:{name:"영일분식",type:"eat",moods:["eat","discover"],walk:1,budget:1,duration:45,cost:7000,score:8,season:[],roles:["lunch","eat"],fit:["walk","discover"],coord:[37.5163186259169,126.889679697407],coordStatus:"verified"},
+  3:{name:"철산장",type:"eat",moods:["eat","discover"],walk:2,budget:2,duration:75,cost:25000,score:9,season:["autumn"],roles:["dinner","eat"],fit:["walk","beer"],coord:[37.5119059,126.8920753],coordStatus:"verified"},
+  4:{name:"러스트 베이커리",type:"coffee",moods:["coffee","discover","art"],walk:1,budget:1,duration:45,cost:9000,score:9,season:["autumn"],roles:["coffee","rest"],fit:["walk","discover","autumn"],coord:[37.513240396827,126.89375755055],coordStatus:"verified"},
+  5:{name:"문래방구",type:"coffee",moods:["coffee","discover"],walk:1,budget:1,duration:40,cost:7000,score:8,season:[],roles:["coffee","rest"],fit:["walk","discover"],coord:[37.5137312702426,126.898064978194],coordStatus:"verified"},
+  6:{name:"문래근린공원",type:"walk",moods:["walk","rest"],walk:2,budget:0,duration:30,cost:0,score:7,season:["autumn"],roles:["rest","walk"],fit:["eat","coffee","walk"],coord:[37.515141204688,126.89366509127],coordStatus:"verified"},
+  7:{name:"문래동 꽃밭정원",type:"walk",moods:["walk","discover","art"],walk:2,budget:0,duration:35,cost:0,score:9,season:["autumn"],roles:["autumn","walk"],fit:["walk","discover","coffee"],coord:[37.517673,126.898695],coordStatus:"verified"},
+  8:{name:"은진포차",type:"night",moods:["eat","beer","discover"],walk:2,budget:2,duration:75,cost:30000,score:9,season:["autumn"],roles:["dinner","night","seasonal"],fit:["walk","beer"],coord:[37.5169,126.8955],coordStatus:"approx"},
+  9:{name:"올드문래",type:"night",moods:["beer","discover"],walk:1,budget:2,duration:80,cost:22000,score:9,season:["autumn"],roles:["night","beer"],fit:["walk","dinner"],coord:[37.51393516998,126.894275495896],coordStatus:"verified"},
+  10:{name:"월화갈비",type:"eat",moods:["eat","beer"],walk:2,budget:3,duration:80,cost:35000,score:9,season:["autumn"],roles:["dinner","eat"],fit:["walk","beer","night"],coord:[37.5133128077052,126.893529850086],coordStatus:"verified"},
+  11:{name:"죽변항",type:"night",moods:["eat","beer","discover"],walk:3,budget:3,duration:90,cost:40000,score:8,season:["autumn"],roles:["dinner","night","seasonal"],fit:["walk","beer","night"],coord:[37.527041471486,126.89758735095],coordStatus:"verified"}
 };
+const START_POINT={name:"세미콜론문래",coord:[37.5163887,126.8999754]};
 
 const timeProfile={
   "12:00":{hours:5,maxWalk:3,maxStops:6,start:["lunch","eat"],end:["dinner","eat"]},
@@ -71,9 +72,14 @@ const walkLevel={ "30분 정도":1, "1시간 정도":2, "많이 걸어도 좋아
 const budgetLevel={ "1만원 이하":1, "1–3만원":2, "3–5만원":3, "오늘은 아끼지 않음":4 };
 
 function distance(a,b){
-  const dx=a.xy[0]-b.xy[0], dy=a.xy[1]-b.xy[1];
-  return Math.sqrt(dx*dx+dy*dy);
+  const R=6371, lat1=a.coord[0]*Math.PI/180, lat2=b.coord[0]*Math.PI/180;
+  const dLat=(b.coord[0]-a.coord[0])*Math.PI/180, dLon=(b.coord[1]-a.coord[1])*Math.PI/180;
+  const x=Math.sin(dLat/2)**2+Math.cos(lat1)*Math.cos(lat2)*Math.sin(dLon/2)**2;
+  return R*2*Math.atan2(Math.sqrt(x),Math.sqrt(1-x));
 }
+function walkingEstimateKm(a,b){return distance(a,b)*1.28;}
+function walkingMinutes(a,b){return Math.max(2,Math.round(walkingEstimateKm(a,b)/4.5*60));}
+
 function direction(a,b){
   const dx=b.xy[0]-a.xy[0], dy=b.xy[1]-a.xy[1];
   if(Math.abs(dx)>Math.abs(dy)*1.5) return dx>0?"동쪽":"서쪽";
@@ -82,7 +88,7 @@ function direction(a,b){
 }
 function transitionScore(from,to,role){
   if(!from) return 0;
-  const d=distance(from,to);
+  const d=walkingEstimateKm(from,to);
   let score=Math.max(0,18-d*0.65);
   if(from.fit?.some(x=>to.roles.includes(x))) score+=9;
   if(to.fit?.some(x=>from.roles.includes(x))) score+=5;
@@ -138,7 +144,7 @@ function makeRoute(){
   const duration=finalIds.reduce((n,id)=>n+placeDB[id].duration,0);
   const cost=finalIds.reduce((n,id)=>n+placeDB[id].cost,0);
   const walkUnits=finalIds.reduce((n,id)=>n+placeDB[id].walk,0);
-  const walkKm=(0.15+finalIds.slice(1).reduce((n,id,i)=>n+distance(placeDB[finalIds[i]],placeDB[id])*0.018,0)).toFixed(1);
+  const walkKm=(finalIds.length?walkingEstimateKm(START_POINT,placeDB[finalIds[0]])+finalIds.slice(1).reduce((n,id,i)=>n+walkingEstimateKm(placeDB[finalIds[i]],placeDB[id]),0):0).toFixed(1);
   return {ids:finalIds,steps:steps.slice(0,maxStops),duration,cost,distance:walkKm};
 }
 
@@ -161,7 +167,7 @@ function buildResult(){
   document.querySelector("#result .start-title").innerHTML="오늘은<br><em>"+editorialLine()+"</em>";
   document.querySelector("#result .result-copy>p").innerHTML="선택한 조건을 조합해 "+route.ids.length+"곳을 골랐어요.<br>"+t.hours+"시간 안에서 "+(state.walkLevel===1?"걷기를 아끼고":state.walkLevel===3?"조금 더 깊게":"적당히 걸으며")+" 문래를 즐기는 코스입니다.";
   const times=[...route.ids]; let elapsed=0;
-  document.getElementById("resultSummary").innerHTML='<div class="result-stats"><span><b>약 '+route.duration+'분</b>예상 소요</span><span><b>'+route.distance+'km</b>도보 거리</span><span><b>'+money(route.cost)+'</b>예상 비용</span></div><div class="route-story">'+route.steps.map((s,i)=>'<span>'+s.role+'</span>').join('<b>→</b>')+'</div><div class="result-route">'+route.ids.map((id,i)=>{const p=placeDB[id];const step=route.steps[i];const prev=i?placeDB[route.ids[i-1]]:null;const move=prev?'<div class="route-move">약 <strong>'+Math.max(2,Math.round(distance(prev,p)*0.75))+'분</strong> · '+direction(prev,p)+' 이동 · '+(prev.fit?.some(x=>p.roles.includes(x))?'궁합 좋은 다음 장면':'자연스럽게 이어지는 다음 장면')+'</div>':'';return move+'<a href="place.html?id='+id+'"><small>0'+(i+1)+'</small><strong>'+p.name+'</strong><span>'+step.role+' · '+p.duration+'분</span><i>→</i></a>'}).join("")}</div>';
+  document.getElementById("resultSummary").innerHTML='<div class="result-stats"><span><b>약 '+route.duration+'분</b>예상 소요</span><span><b>'+route.distance+'km</b>예상 도보 거리</span><span><b>'+money(route.cost)+'</b>예상 비용</span></div><div class="route-story">'+route.steps.map((s,i)=>'<span>'+s.role+'</span>').join('<b>→</b>')+'</div><div class="result-route">'+route.ids.map((id,i)=>{const p=placeDB[id];const step=route.steps[i];const prev=i?placeDB[route.ids[i-1]]:null;const move=prev?'<div class="route-move">약 <strong>'+walkingMinutes(prev,p)+'분</strong> · '+direction(prev,p)+' 이동 · '+(prev.fit?.some(x=>p.roles.includes(x))?'궁합 좋은 다음 장면':'자연스럽게 이어지는 다음 장면')+'</div>':'';return move+'<a href="place.html?id='+id+'"><small>0'+(i+1)+'</small><strong>'+p.name+'</strong><span>'+step.role+' · '+p.duration+'분</span><i>→</i></a>'}).join("")}</div>';
   document.getElementById("showResult").textContent="전체 코스 보기 →";
 }
 
