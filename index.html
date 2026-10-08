@@ -82,14 +82,31 @@ function walkingMinutes(a,b){return Math.max(2,Math.round(walkingEstimateKm(a,b)
 
 function miniMap(routeIds){
   const pts=[START_POINT,...routeIds.map(id=>placeDB[id])];
-  const lat=pts.map(p=>p.coord[0]), lon=pts.map(p=>p.coord[1]);
-  const minLat=Math.min(...lat), maxLat=Math.max(...lat), minLon=Math.min(...lon), maxLon=Math.max(...lon);
-  const py=Math.max((maxLat-minLat)*.22,.0012), px=Math.max((maxLon-minLon)*.22,.0012);
-  const project=p=>({x:10+((p.coord[1]-(minLon-px))/((maxLon-minLon)+2*px))*80,y:90-((p.coord[0]-(minLat-py))/((maxLat-minLat)+2*py))*80});
+  const coords=pts.map(p=>p.coord);
+  const minLat=Math.min(...coords.map(x=>x[0])), maxLat=Math.max(...coords.map(x=>x[0]));
+  const minLon=Math.min(...coords.map(x=>x[1])), maxLon=Math.max(...coords.map(x=>x[1]));
+  const py=Math.max((maxLat-minLat)*.20,.0012), px=Math.max((maxLon-minLon)*.20,.0015);
+  const project=p=>({x:8+((p.coord[1]-(minLon-px))/((maxLon-minLon)+2*px))*84,y:92-((p.coord[0]-(minLat-py))/((maxLat-minLat)+2*py))*84});
   const points=pts.map(project);
   const line=points.map(p=>p.x.toFixed(1)+","+p.y.toFixed(1)).join(" ");
-  const dots=points.map((p,i)=>'<g class="mini-point '+(i===0?'mini-start':'')+'"><circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(i===0?2.4:3)+'"/><text x="'+p.x.toFixed(1)+'" y="'+(p.y-5).toFixed(1)+'" text-anchor="middle">'+(i===0?'S':String(i).padStart(2,'0'))+'</text></g>').join("");
-  return '<div class="mini-map"><div class="mini-map-head"><b>YOUR ROUTE</b><small>'+routeIds.length+' STOPS</small></div><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polyline class="mini-route-bg" points="'+line+'"/><polyline class="mini-route" points="'+line+'"/>'+dots+'</svg><div class="mini-map-foot"><span>S · 세미콜론문래</span><span>01 → '+String(routeIds.length).padStart(2,'0')+'</span></div></div>';
+  const road=(name,arr,cls="map-road")=>'<path class="'+cls+'" d="M '+arr.map(p=>p[0]+","+p[1]).join(" L ")+'"/><text class="map-road-label" x="'+arr[Math.floor(arr.length/2)][0]+'" y="'+(arr[Math.floor(arr.length/2)][1]-1.8)+'">'+name+"</text>";
+  const roads=[
+    road("경인로",[[0,77],[25,72],[55,67],[100,60]],"map-road major"),
+    road("도림로",[[2,88],[23,77],[47,61],[72,43],[100,22]],"map-road major"),
+    road("문래로",[[8,18],[34,31],[59,43],[91,54]],"map-road"),
+    road("문래로28길",[[20,100],[31,80],[42,60],[53,40],[62,17]],"map-road"),
+    road("경인로88길",[[48,82],[53,65],[58,48],[64,30]],"map-road"),
+    road("도림로128길",[[12,52],[35,55],[58,58],[86,61]],"map-road"),
+    road("도림로133길",[[20,67],[42,68],[66,69],[91,71]],"map-road"),
+    road("도림로141가길",[[27,82],[45,78],[68,74],[94,69]],"map-road")
+  ].join("");
+  const blocks=[
+    "10,22 30,30 25,48 5,42","35,30 57,41 51,55 30,48","62,20 88,31 80,46 58,40",
+    "8,57 28,55 24,72 3,78","31,57 51,58 45,75 25,71","54,57 75,60 67,76 47,73",
+    "77,48 97,43 98,61 77,64","48,78 68,80 61,96 40,91"
+  ].map(p=>'<polygon class="map-block" points="'+p+'"/>').join("");
+  const dots=points.map((p,i)=>'<g class="mini-point '+(i===0?'mini-start':'')+'"><circle cx="'+p.x.toFixed(1)+'" cy="'+p.y.toFixed(1)+'" r="'+(i===0?2.5:3.1)+'"/><text x="'+p.x.toFixed(1)+'" y="'+(p.y-5).toFixed(1)+'" text-anchor="middle">'+(i===0?'S':String(i).padStart(2,'0'))+'</text></g>').join("");
+  return '<div class="mini-map"><div class="mini-map-head"><b>YOUR ROUTE / MULLAE</b><small>'+routeIds.length+' STOPS</small></div><svg viewBox="0 0 100 100" preserveAspectRatio="none"><g class="map-blocks">'+blocks+'</g><g class="map-roads">'+roads+'</g><polyline class="mini-route-bg" points="'+line+'"/><polyline class="mini-route" points="'+line+'"/>'+dots+'</svg><div class="mini-map-foot"><span>S · 세미콜론문래</span><span>01 → '+String(routeIds.length).padStart(2,'0')+'</span></div></div>';
 }
 function encodeMapPart(v){return encodeURIComponent(String(v));}
 function naverWalkUrl(from,to){
