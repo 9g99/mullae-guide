@@ -40,17 +40,33 @@
   <div class="start-footer"><button class="back-button" data-back="q3">← 이전</button><span>YOUR MULLAE · 04</span></div>
 </section>
 <section class="start-panel result-panel" id="result">
-  <div class="start-number">MULLAE / YOUR DAY</div><div class="result-copy"><div class="eyebrow">CURATED FOR YOU</div><h1 class="start-title">오늘은<br><em>집에 바로 가지 마세요.</em></h1><p>이제 선택한 시간과 취향을 바탕으로<br>당신만의 문래 코스를 만들어볼게요.</p><button class="result-button" id="showResult">MY MULLAE →</button></div>
+  <div class="start-number">MULLAE / YOUR DAY</div><div class="result-copy"><div class="eyebrow">CURATED FOR YOU</div><h1 class="start-title">오늘은<br><em>집에 바로 가지 마세요.</em></h1><p>이제 선택한 시간과 취향을 바탕으로<br>당신만의 문래 코스를 만들어볼게요.</p><div class="result-summary" id="resultSummary"></div><button class="result-button" id="showResult">MY MULLAE →</button></div>
 </section>
 </main>
 <script>
 const panels=[...document.querySelectorAll('.start-panel')];
 const state={time:null,moods:[],walk:null,budget:null};
+const routeData={
+  "12:00":{title:"문래를 천천히.",desc:"점심부터 저녁까지, 오래된 문래의 하루를 천천히 따라가세요.",time:"약 5시간",distance:"약 2.4km",cost:"₩12,000–30,000",route:[["소문난식당","김치고등어조림으로 시작하는 문래식 점심.","place.html?id=1"],["철공소 골목","오래된 간판과 셔터를 따라 걷기.","place.html?id=0"],["문래예술촌","철과 예술이 겹쳐지는 골목.","place.html?id=0"],["러스트 베이커리","빵과 커피, 그리고 잠깐의 휴식.","place.html?id=4"],["문래동 꽃밭정원","가을의 색을 하나 찾아보기.","place.html?id=7"],["철산장","돼지갈비 또는 평양냉면으로 마무리.","place.html?id=3"]]},
+  "15:00":{title:"회사 대신 문래.",desc:"오후 세 시, 반차처럼 시작해 노을과 저녁까지 이어가는 코스.",time:"약 4시간",distance:"약 2.0km",cost:"₩10,000–35,000",route:[["문래방구","작은 카페에서 오늘의 리듬 만들기.","place.html?id=5"],["철공소 골목","낮의 작업 흔적을 천천히 관찰하기.","place.html?id=0"],["문래예술촌","골목 자체를 목적지로 걷기.","place.html?id=0"],["문래근린공원","잠깐 앉아서 오후를 정리하기.","place.html?id=6"],["GOLDEN HOUR","철공소 사이로 들어오는 저녁빛 찾기.","map.html"],["월화갈비","직화구이로 오후를 저녁으로 바꾸기.","place.html?id=10"]]},
+  "17:00":{title:"오늘은 바로 집에 가지 않는다.",desc:"퇴근 직후 걷고, 노을을 보고, 제철 음식과 맥주로 하루를 닫습니다.",time:"약 3시간",distance:"약 1.8km",cost:"₩20,000–45,000",route:[["문래예술촌","퇴근 후 가장 먼저 해야 할 일은 걷는 것.","place.html?id=0"],["철공소 골목","일터가 끝나는 시간의 골목을 보기.","place.html?id=0"],["GOLDEN HOUR","사진보다 눈으로 먼저 보는 문래의 저녁.","map.html"],["은진포차","오늘 들어온 제철 해산물을 물어보기.","place.html?id=8"],["올드문래","마지막은 문래다운 맥주 한 잔.","place.html?id=9"]]},
+  "19:00":{title:"늦게 끝났어도, 한 잔.",desc:"시간이 늦었다면 욕심내지 않고 가까운 곳에서 문래의 밤만 골라보세요.",time:"약 2시간",distance:"약 1.1km",cost:"₩15,000–40,000",route:[["문래예술촌","짧게 골목 한 바퀴.","place.html?id=0"],["올드문래","맥주와 안주로 오늘을 마무리.","place.html?id=9"]]}
+};
+function buildResult(){
+  const d=routeData[state.time]||routeData["17:00"];
+  const moodText=state.moods.length?state.moods.map(m=>({eat:"먹기",walk:"걷기",coffee:"카페",discover:"발견",beer:"한잔",art:"예술"}[m])).join(" · "):"오늘의 문래";
+  document.querySelector("#result .result-copy .eyebrow").textContent="CURATED FOR YOU · "+moodText;
+  document.querySelector("#result .start-title").innerHTML="오늘은<br><em>"+d.title+"</em>";
+  document.querySelector("#result .result-copy>p").innerHTML=d.desc+"<br>선택한 조건에 맞춰 "+d.route.length+"곳을 골랐어요.";
+  document.getElementById("resultSummary").innerHTML='<div class="result-stats"><span><b>'+d.time+'</b>예상 소요</span><span><b>'+d.distance+'</b>도보 거리</span><span><b>'+d.cost+'</b>예상 비용</span></div><div class="result-route">'+d.route.map((x,i)=>'<a href="'+x[2]+'"><small>0'+(i+1)+'</small><strong>'+x[0]+'</strong><span>'+x[1]+'</span><i>→</i></a>').join("")+'</div>';
+  document.getElementById("showResult").textContent="전체 코스 보기 →";
+}
+
 function show(id){panels.forEach(p=>p.classList.toggle('active',p.id===id));window.scrollTo({top:0,behavior:'smooth'});}
 document.querySelectorAll('#q1 .answer').forEach(b=>b.addEventListener('click',()=>{state.time=b.querySelector('strong').textContent;show(b.dataset.next)}));
 document.querySelectorAll('#q2 .answer').forEach(b=>b.addEventListener('click',()=>{b.classList.toggle('selected');const m=b.dataset.mood;if(state.moods.includes(m))state.moods=state.moods.filter(x=>x!==m);else state.moods.push(m);setTimeout(()=>{if(state.moods.length)show('q3')},180)}));
 document.querySelectorAll('#q3 .answer').forEach(b=>b.addEventListener('click',()=>{state.walk=b.textContent.trim();show(b.dataset.next)}));
-document.querySelectorAll('#q4 .answer').forEach(b=>b.addEventListener('click',()=>{state.budget=b.textContent.trim();show(b.dataset.next)}));
+document.querySelectorAll('#q4 .answer').forEach(b=>b.addEventListener('click',()=>{state.budget=b.textContent.trim();buildResult();show(b.dataset.next)}));
 document.querySelectorAll('.back-button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.back)));
-document.getElementById('showResult').addEventListener('click',()=>location.href='12.html');
+document.getElementById('showResult').addEventListener('click',()=>location.href='map.html');
 </script></body></html>
