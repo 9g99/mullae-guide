@@ -17,3 +17,47 @@
 
 /* MOBILE-FIRST GUIDE FRAME */
 .start-page{background:#0d0b30}.start-page .top{width:min(430px,100%);margin:auto;padding-left:18px;padding-right:18px}.start{width:min(430px,100%);height:calc(100dvh - 72px);min-height:0;margin:auto;background:var(--indigo);box-shadow:0 0 70px rgba(0,0,0,.28);overflow:hidden}.start-panel{height:100%;min-height:0;width:100%;padding:28px 22px 20px;overflow-y:auto}.start-copy{margin:auto 0 28px}.start-title{font-size:clamp(54px,17vw,76px);line-height:.84}.start-intro{font-size:15px}.answer-grid,.time-grid,.mood-grid{grid-template-columns:1fr 1fr;gap:8px}.answer{min-height:92px;padding:14px}.answer strong{font-size:27px}.answer span{font-size:10px}.start-footer{margin-top:14px}.result-panel{justify-content:flex-start}.result-panel .result-copy{margin-top:auto;margin-bottom:auto}.result-panel .start-title{font-size:52px}.result-summary{margin:20px 0}.result-stats{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.35)}.result-stats span{padding:11px 5px;font-size:8px;opacity:.7;border-right:1px solid rgba(255,255,255,.25)}.result-stats span:last-child{border-right:0}.result-stats b{display:block;font-family:var(--serif);font-size:18px;color:var(--teal);opacity:1}.result-route{margin-top:8px;border-bottom:1px solid rgba(255,255,255,.25)}.result-route a{display:grid;grid-template-columns:24px 1fr 15px;column-gap:8px;padding:11px 0;border-top:1px solid rgba(255,255,255,.18);align-items:center}.result-route small{grid-row:1/3;opacity:.4}.result-route strong{font-family:var(--serif);font-size:20px;font-weight:500;line-height:1}.result-route span{font-size:9px;opacity:.6;margin-top:3px}.result-route i{grid-column:3;grid-row:1/3;font-style:normal}.result-button{width:100%;margin-top:8px}@media(min-width:701px){.start-page .top{margin:auto}.start-panel{padding-left:22px;padding-right:22px}.start:before,.start:after{display:none}}
+
+/* UNIFIED MOBILE GUIDE SHELL */
+@media(min-width:701px){
+ body:not(.start-page){background:#d9d4cd}
+ body:not(.start-page)>header.top,body:not(.start-page)>main,body:not(.start-page)>footer{width:min(430px,100%);margin-left:auto;margin-right:auto}
+ body:not(.start-page)>header.top{height:72px;padding:0 18px}
+ body:not(.start-page)>main{background:var(--cream);min-height:calc(100vh - 72px)}
+ body:not(.start-page)>footer{background:var(--indigo)}
+ body:not(.start-page) .shell{width:100%;padding-left:18px;padding-right:18px}
+ body:not(.start-page) .section-grid,body:not(.start-page) .detail-hero,body:not(.start-page) .course-hero,body:not(.start-page) .map-layout{display:block}
+ body:not(.start-page) .pagehead{display:block;padding:55px 18px 32px}
+ body:not(.start-page) .pagehead p{margin-top:25px;font-size:14px}
+ body:not(.start-page) .display{font-size:64px}
+ body:not(.start-page) .grid4{grid-template-columns:1fr 1fr}
+ body:not(.start-page) .featured-grid{display:block}
+ body:not(.start-page) .featured-side{display:block}
+ body:not(.start-page) .featured-side .small{margin-top:12px}
+ body:not(.start-page) .course-copy{padding:52px 18px 32px}
+ body:not(.start-page) .course-photo{min-height:420px}
+ body:not(.start-page) .detail{padding:40px 18px 60px}
+ body:not(.start-page) .detail-gallery{height:430px}
+ body:not(.start-page) .detail-copy{padding-top:30px}
+ body:not(.start-page) .map-art{min-height:520px}
+ body:not(.start-page) .map-side{min-height:420px}
+}
+@media(max-width:700px){
+ body:not(.start-page) .top{height:62px;padding:0 16px}
+ body:not(.start-page) .menu{display:flex;gap:0}
+ body:not(.start-page) .menu a{padding:7px 6px;font-size:9px}
+ body:not(.start-page) .section{padding:48px 16px}
+ body:not(.start-page) .pagehead{padding:48px 16px 30px}
+ body:not(.start-page) .pagehead .display{font-size:62px}
+ body:not(.start-page) .course-hero{display:flex;flex-direction:column}
+ body:not(.start-page) .course-copy{padding:48px 16px 30px}
+ body:not(.start-page) .course-photo{min-height:370px}
+ body:not(.start-page) .course-photo img{max-height:370px}
+ body:not(.start-page) .stop{grid-template-columns:55px 1fr}
+ body:not(.start-page) .stop p{grid-column:2}
+ body:not(.start-page) .detail{padding:38px 16px 55px}
+ body:not(.start-page) .detail-gallery{height:390px}
+ body:not(.start-page) .map-art{min-height:500px}
+ body:not(.start-page) .map-side{padding:22px}
+ body:not(.start-page) .quest-board{padding:25px 16px}
+}
