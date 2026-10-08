@@ -68,3 +68,5 @@
 .result-stats b{color:#a9c3a9}
 
 .route-story{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:9px 0 3px;font-size:7px;letter-spacing:.08em;opacity:.55}.route-story span{border:1px solid rgba(255,255,255,.25);padding:3px 5px}.route-story b{font-weight:400;opacity:.5}
+
+.route-move{display:flex;align-items:center;gap:7px;padding:5px 0 5px 32px;font-size:8px;color:rgba(255,255,255,.5)}.route-move:before{content:"↳";font-size:10px}.route-move strong{color:#a9c3a9;font-weight:500}
