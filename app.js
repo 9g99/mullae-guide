@@ -1,0 +1,3 @@
+const nav=()=>{const p=location.pathname.split('/').pop()||'index.html';document.querySelectorAll('.menu a').forEach(a=>{if(a.getAttribute('href')?.includes(p))a.classList.add('active')})};document.addEventListener('DOMContentLoaded',nav);
+function quest(){const n=document.querySelectorAll('.quest-item input:checked').length;const labels=['MULLAE BEGINNER','WALKER','LOCAL','PERSON'];const rank=n<3?labels[0]:n<5?labels[1]:n<7?labels[2]:labels[3];const el=document.querySelector('.quest-result');if(el)el.textContent=n+' / 8 · '+rank;}
+document.addEventListener('change',e=>{if(e.target.matches('.quest-item input'))quest()});
