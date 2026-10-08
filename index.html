@@ -47,11 +47,13 @@
 window.__mullaeStartTime=null;
 window.mullaeStartNext=function(button){
   window.__mullaeStartTime=button.dataset.time;
+  if(window.__mullaeState) window.__mullaeState.time=button.dataset.time;
   document.querySelectorAll('.start-panel').forEach(function(panel){panel.classList.toggle('active',panel.id===button.dataset.next);});
   window.scrollTo(0,0);
 };
 const panels=[...document.querySelectorAll('.start-panel')];
 const state={time:window.__mullaeStartTime,moods:[],walk:null,budget:null};
+window.__mullaeState=state;
 const placeDB={
   0:{name:"문래예술촌",type:"walk",moods:["walk","discover","art"],walk:1,budget:0,duration:30,cost:0,score:10,season:["autumn"],roles:["walk","discover"],fit:["coffee","eat","beer"],coord:[37.5149,126.8939],coordStatus:"approx"},
   1:{name:"소문난식당",type:"eat",moods:["eat","discover"],walk:1,budget:1,duration:55,cost:10000,score:9,season:[],roles:["lunch","eat"],fit:["walk","discover"],coord:[37.51625,126.8897],coordStatus:"approx"},
