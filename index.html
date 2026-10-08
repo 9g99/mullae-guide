@@ -7,10 +7,10 @@
   <div class="start-number">01 <span>/ 04</span></div>
   <div class="start-copy"><div class="eyebrow">AUTUMN 2026 · MULLAE, SEOUL</div><h1 class="start-title">오늘<br>몇 시에<br><em>퇴근하세요?</em></h1><p class="start-intro">시간을 알려주세요.<br>오늘의 문래를 골라드릴게요.</p></div>
   <div class="answer-grid time-grid">
-    <button class="answer" data-time="12:00" data-next="q2"><strong>12:00</strong><span>점심부터 문래</span></button>
-    <button class="answer" data-time="15:00" data-next="q2"><strong>15:00</strong><span>오후를 통째로</span></button>
-    <button class="answer" data-time="17:00" data-next="q2"><strong>17:00</strong><span>퇴근하고 바로</span></button>
-    <button class="answer" data-time="19:00" data-next="q2"><strong>19:00</strong><span>오늘은 조금 늦게</span></button>
+    <button type="button" class="answer" data-time="12:00" data-next="q2" onclick="mullaeStartNext(this)"><strong>12:00</strong><span>점심부터 문래</span></button>
+    <button type="button" class="answer" data-time="15:00" data-next="q2" onclick="mullaeStartNext(this)"><strong>15:00</strong><span>오후를 통째로</span></button>
+    <button type="button" class="answer" data-time="17:00" data-next="q2" onclick="mullaeStartNext(this)"><strong>17:00</strong><span>퇴근하고 바로</span></button>
+    <button type="button" class="answer" data-time="19:00" data-next="q2" onclick="mullaeStartNext(this)"><strong>19:00</strong><span>오늘은 조금 늦게</span></button>
   </div>
   <div class="start-footer"><span>YOUR MULLAE · 01</span><span>SCROLL / SELECT</span></div>
 </section>
@@ -44,8 +44,14 @@
 </section>
 </main>
 <script>
+window.__mullaeStartTime=null;
+window.mullaeStartNext=function(button){
+  window.__mullaeStartTime=button.dataset.time;
+  document.querySelectorAll('.start-panel').forEach(function(panel){panel.classList.toggle('active',panel.id===button.dataset.next);});
+  window.scrollTo(0,0);
+};
 const panels=[...document.querySelectorAll('.start-panel')];
-const state={time:null,moods:[],walk:null,budget:null};
+const state={time:window.__mullaeStartTime,moods:[],walk:null,budget:null};
 const placeDB={
   0:{name:"문래예술촌",type:"walk",moods:["walk","discover","art"],walk:1,budget:0,duration:30,cost:0,score:10,season:["autumn"],roles:["walk","discover"],fit:["coffee","eat","beer"],coord:[37.5149,126.8939],coordStatus:"approx"},
   1:{name:"소문난식당",type:"eat",moods:["eat","discover"],walk:1,budget:1,duration:55,cost:10000,score:9,season:[],roles:["lunch","eat"],fit:["walk","discover"],coord:[37.51625,126.8897],coordStatus:"approx"},
