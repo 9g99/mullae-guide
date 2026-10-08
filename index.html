@@ -80,6 +80,27 @@ function distance(a,b){
 function walkingEstimateKm(a,b){return distance(a,b)*1.28;}
 function walkingMinutes(a,b){return Math.max(2,Math.round(walkingEstimateKm(a,b)/4.5*60));}
 
+function encodeMapPart(v){return encodeURIComponent(String(v));}
+function naverWalkUrl(from,to){
+  const f=from.coord, t=to.coord;
+  return "https://way-m.map.naver.com/quick-path/"
+    +[f[1],f[0],from.name].map(encodeMapPart).join(",")
+    +"/"+[t[1],t[0],to.name].map(encodeMapPart).join(",")
+    +"/-/walk/0";
+}
+function kakaoWalkUrl(from,to){
+  const f=from.coord, t=to.coord;
+  return "https://map.kakao.com/link/by/walk/"
+    +[from.name,f[0],f[1]].map(encodeMapPart).join(",")
+    +"/"+[to.name,t[0],t[1]].map(encodeMapPart).join(",");
+}
+function routeMoveLinks(from,to){
+  return '<div class="route-links">'
+    +'<a href="'+naverWalkUrl(from,to)+'" target="_blank" rel="noopener">네이버지도 길찾기 ↗</a>'
+    +'<a href="'+kakaoWalkUrl(from,to)+'" target="_blank" rel="noopener">카카오맵 길찾기 ↗</a>'
+    +'</div>';
+}
+
 function direction(a,b){
   const dx=b.xy[0]-a.xy[0], dy=b.xy[1]-a.xy[1];
   if(Math.abs(dx)>Math.abs(dy)*1.5) return dx>0?"동쪽":"서쪽";
@@ -167,7 +188,7 @@ function buildResult(){
   document.querySelector("#result .start-title").innerHTML="오늘은<br><em>"+editorialLine()+"</em>";
   document.querySelector("#result .result-copy>p").innerHTML="선택한 조건을 조합해 "+route.ids.length+"곳을 골랐어요.<br>"+t.hours+"시간 안에서 "+(state.walkLevel===1?"걷기를 아끼고":state.walkLevel===3?"조금 더 깊게":"적당히 걸으며")+" 문래를 즐기는 코스입니다.";
   const times=[...route.ids]; let elapsed=0;
-  document.getElementById("resultSummary").innerHTML='<div class="result-stats"><span><b>약 '+route.duration+'분</b>예상 소요</span><span><b>'+route.distance+'km</b>예상 도보 거리</span><span><b>'+money(route.cost)+'</b>예상 비용</span></div><div class="route-story">'+route.steps.map((s,i)=>'<span>'+s.role+'</span>').join('<b>→</b>')+'</div><div class="result-route">'+route.ids.map((id,i)=>{const p=placeDB[id];const step=route.steps[i];const prev=i?placeDB[route.ids[i-1]]:null;const move=prev?'<div class="route-move">약 <strong>'+walkingMinutes(prev,p)+'분</strong> · '+direction(prev,p)+' 이동 · '+(prev.fit?.some(x=>p.roles.includes(x))?'궁합 좋은 다음 장면':'자연스럽게 이어지는 다음 장면')+'</div>':'';return move+'<a href="place.html?id='+id+'"><small>0'+(i+1)+'</small><strong>'+p.name+'</strong><span>'+step.role+' · '+p.duration+'분</span><i>→</i></a>'}).join("")}</div>';
+  document.getElementById("resultSummary").innerHTML='<div class="result-stats"><span><b>약 '+route.duration+'분</b>예상 소요</span><span><b>'+route.distance+'km</b>예상 도보 거리</span><span><b>'+money(route.cost)+'</b>예상 비용</span></div><div class="route-story">'+route.steps.map((s,i)=>'<span>'+s.role+'</span>').join('<b>→</b>')+'</div><div class="result-route">'+route.ids.map((id,i)=>{const p=placeDB[id];const step=route.steps[i];const prev=i?placeDB[route.ids[i-1]]:null;const move='<div class="route-move">'+(prev?'약 <strong>'+walkingMinutes(prev,p)+'분</strong> · '+direction(prev,p)+' 이동 · '+(prev.fit?.some(x=>p.roles.includes(x))?'궁합 좋은 다음 장면':'자연스럽게 이어지는 다음 장면'):'세미콜론문래에서 출발')+'</div>'+routeMoveLinks(prev||START_POINT,p);return move+'<a href="place.html?id='+id+'"><small>0'+(i+1)+'</small><strong>'+p.name+'</strong><span>'+step.role+' · '+p.duration+'분</span><i>→</i></a>'}).join("")}</div>';
   document.getElementById("showResult").textContent="전체 코스 보기 →";
 }
 
