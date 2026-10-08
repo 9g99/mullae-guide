@@ -66,3 +66,5 @@
 .start-page .answer:hover,.start-page .answer.selected{box-shadow:5px 5px 0 var(--brown)}
 .next-button{border:1px solid rgba(255,255,255,.55);background:var(--teal);color:#152018;padding:8px 12px;font-size:9px;font-weight:700;letter-spacing:.08em;cursor:pointer}
 .result-stats b{color:#a9c3a9}
+
+.route-story{display:flex;align-items:center;gap:5px;flex-wrap:wrap;margin:9px 0 3px;font-size:7px;letter-spacing:.08em;opacity:.55}.route-story span{border:1px solid rgba(255,255,255,.25);padding:3px 5px}.route-story b{font-weight:400;opacity:.5}
