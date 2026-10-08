@@ -164,5 +164,5 @@ document.querySelectorAll('#q3 .answer').forEach(b=>b.addEventListener('click',(
 document.querySelectorAll('#q4 .answer').forEach(b=>b.addEventListener('click',()=>{state.budget=b.textContent.trim();state.budgetLevel=budgetLevel[state.budget];buildResult();show(b.dataset.next)}));
 document.getElementById('showResult').addEventListener('click',()=>location.href='map.html');
 document.querySelectorAll('.back-button').forEach(b=>b.addEventListener('click',()=>show(b.dataset.back)));
-document.getElementById('showResult').addEventListener('click',()=>location.href='map.html');
+
 </script></body></html>
